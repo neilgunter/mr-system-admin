@@ -1,6 +1,6 @@
 # SSH Key Pairs
 
-If you’re managing Linux systems for real, you’ll live and die by SSH keys. Passwords are for tourists. But poorly handled keys are a security mess waiting to happen.
+If you're managing Linux systems for real, you'll live and die by SSH keys. Passwords are for tourists. But poorly handled keys are a security mess waiting to happen.
 
 ---
 
@@ -10,12 +10,18 @@ On your workstation:
 
     ssh-keygen -t ed25519 -C "your.email@example.com"
 
+This command uses the Ed25519 algorithm (a modern, secure elliptic curve algorithm) to generate your SSH key pair, with your email address as an identifying comment.
+
 This creates:
 
 - `~/.ssh/id_ed25519` (private key — guard this with your life)  
 - `~/.ssh/id_ed25519.pub` (public key — safe to share)
 
-*Pro Tip*: Always use a passphrase. A stolen private key without one is just a password that never expires.
+The command will prompt you for:
+- A location to save the keys (default is `~/.ssh/`)
+- An optional passphrase to encrypt the private key
+
+*Pro Tip*: Always use a passphrase. A stolen private key without one is just a password that never expires. Ed25519 keys are preferred over older RSA keys due to better security and smaller size.
 
 ---
 
@@ -57,7 +63,7 @@ In `~/.ssh/config`:
 
 This avoids typing full commands every time.
 
-*Pro Tip*: Name your keys by purpose — `id_backup`, `id_ansible`, etc. — instead of reusing one key everywhere.
+*Pro Tip*: Name your keys by purpose — `id_backup`, `id_ansible`, etc. — instead of reusing one key everywhere. When generating multiple keys, specify different filenames using the `-f` flag.
 
 ---
 
@@ -78,5 +84,3 @@ Keep a change window and test before deleting the old key.
 - Verbose mode helps:
 
       ssh -vvv user@host
-
----
